@@ -4,19 +4,603 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DidactIA - IA para mejorar la comprensión lectora</title>
-    <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #2563eb;
+            --color-primary-dark: #1e40af;
+            --color-secondary: #10b981;
+            --color-text: #1f2937;
+            --color-text-light: #6b7280;
+            --color-bg: #ffffff;
+            --color-bg-light: #f9fafb;
+            --color-bg-section: #f3f4f6;
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+            --spacing-xl: 6rem;
+            --max-width: 1200px;
+            --border-radius: 0.5rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--color-text);
+            background-color: var(--color-bg);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            z-index: 100;
+            padding: var(--spacing-sm) 0;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-fundar {
+            height: 30px;
+            width: auto;
+            filter: brightness(0) saturate(100%) invert(27%) sepia(95%) saturate(1352%) hue-rotate(200deg) brightness(97%) contrast(96%);
+        }
+
+        .nav {
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: center;
+        }
+
+        .nav a {
+            color: var(--color-text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+
+        .nav a:hover {
+            color: var(--color-primary);
+        }
+
+        .nav .cta-button {
+            background-color: var(--color-primary);
+            color: white;
+            padding: 0.5rem 1.25rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+        }
+
+        .nav .cta-button:hover {
+            background-color: var(--color-primary-dark);
+            color: white;
+        }
+
+        /* Hero */
+        .hero {
+            padding: var(--spacing-xl) 0;
+            text-align: center;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-sm);
+            letter-spacing: -0.03em;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            font-weight: 500;
+            color: var(--color-text-light);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .hero-description {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--color-text);
+            max-width: 800px;
+            margin: 0 auto var(--spacing-md);
+            line-height: 1.7;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background-color: var(--color-primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.125rem;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            margin-top: var(--spacing-md);
+        }
+
+        .hero-cta:hover {
+            background-color: var(--color-primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Sections */
+        section {
+            padding: var(--spacing-xl) 0;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+            letter-spacing: -0.02em;
+        }
+
+        /* Problem Section */
+        .problem {
+            background-color: var(--color-bg-light);
+        }
+
+        .problem-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+            padding: var(--spacing-lg);
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 700;
+            color: var(--color-primary);
+            line-height: 1;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .stat-label {
+            font-size: 1.125rem;
+            color: var(--color-text);
+            text-align: center;
+            max-width: 500px;
+        }
+
+        .problem-text {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: var(--color-text);
+            margin-bottom: var(--spacing-md);
+        }
+
+        /* Solution Section */
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        .solution-card {
+            padding: var(--spacing-md);
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .solution-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .solution-card p {
+            color: var(--color-text-light);
+            line-height: 1.7;
+        }
+
+        /* How it works */
+        .how-it-works {
+            background-color: var(--color-bg-light);
+        }
+
+        .how-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .tutor-section,
+        .pedagogy {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .tutor-section h3,
+        .pedagogy h3 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .tutor-section p,
+        .pedagogy p {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: var(--color-text);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .pedagogy strong {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .levels {
+            margin: var(--spacing-lg) 0;
+        }
+
+        .levels h3 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: var(--spacing-md);
+            text-align: center;
+        }
+
+        .levels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+
+        .level-card {
+            padding: var(--spacing-md);
+            background: white;
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--color-primary);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .level-card h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .level-card p {
+            color: var(--color-text-light);
+            line-height: 1.7;
+        }
+
+        /* Teacher Role */
+        .teacher-role {
+            background-color: var(--color-bg-light);
+        }
+
+        .teacher-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .lead {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: var(--color-text);
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .teacher-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .teacher-point {
+            padding: var(--spacing-md);
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .teacher-point h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .teacher-point p {
+            color: var(--color-text-light);
+            line-height: 1.7;
+        }
+
+        /* Access Platform Section */
+        .access-platform {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .access-platform .section-title {
+            color: white;
+        }
+
+        .access-platform-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .access-platform p {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            margin-bottom: var(--spacing-lg);
+            opacity: 0.95;
+        }
+
+        .access-platform .cta-button {
+            display: inline-block;
+            background-color: white;
+            color: var(--color-primary);
+            padding: 1rem 2.5rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.125rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .access-platform .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Implementation */
+        .implementation-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .implementation-list {
+            list-style: none;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .implementation-list li {
+            padding: var(--spacing-sm) 0;
+            padding-left: var(--spacing-md);
+            position: relative;
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: var(--color-text);
+        }
+
+        .implementation-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--color-secondary);
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+
+        .alliance {
+            padding: var(--spacing-md);
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .alliance h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .alliance p {
+            color: var(--color-text);
+            line-height: 1.7;
+        }
+
+        /* About */
+        .about {
+            background-color: var(--color-bg-light);
+        }
+
+        .about-text {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: var(--color-text);
+            max-width: 800px;
+            margin: 0 auto var(--spacing-lg);
+            text-align: center;
+        }
+
+        .credentials {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .credentials h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: var(--spacing-md);
+            text-align: center;
+        }
+
+        .credentials-list {
+            list-style: none;
+        }
+
+        .credentials-list li {
+            padding: var(--spacing-sm) 0;
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: var(--color-text);
+        }
+
+        .credentials-list a {
+            color: var(--color-primary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .credentials-list a:hover {
+            color: var(--color-primary-dark);
+            text-decoration: underline;
+        }
+
+        .year {
+            font-weight: 600;
+            color: var(--color-primary);
+            min-width: 60px;
+            display: inline-block;
+        }
+
+        /* Footer */
+        .footer {
+            padding: var(--spacing-md) 0;
+            background-color: var(--color-text);
+            color: white;
+            text-align: center;
+        }
+
+        .footer p {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            :root {
+                --spacing-lg: 3rem;
+                --spacing-xl: 4rem;
+            }
+
+            .header .container {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+            }
+
+            .logo-container {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+            }
+
+            .nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero {
+                padding: var(--spacing-lg) 0;
+            }
+
+            section {
+                padding: var(--spacing-lg) 0;
+            }
+
+            .solution-grid,
+            .levels-grid,
+            .teacher-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat {
+                padding: var(--spacing-md);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 var(--spacing-sm);
+            }
+
+            .nav {
+                gap: var(--spacing-sm);
+            }
+
+            .nav a {
+                font-size: 0.875rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <div class="logo">DidactIA</div>
+            <div class="logo-container">
+                <img src="https://didactia.fund.ar/isologo.png" alt="DidactIA" class="logo">
+                <img src="https://fund.ar/wp-content/uploads/2022/07/logo_fundar-light.svg" alt="Fundar" class="logo-fundar">
+            </div>
             <nav class="nav">
                 <a href="#solucion">Solución</a>
                 <a href="#como-funciona">Cómo funciona</a>
                 <a href="#implementacion">Implementación</a>
+                <a href="#acceder" class="cta-button">Acceder a plataforma</a>
             </nav>
         </div>
     </header>
@@ -30,6 +614,7 @@
                     Una plataforma de IA diseñada para la equidad educativa que combina inteligencia artificial generativa, 
                     pedagogía y analítica educativa para fortalecer la comprensión lectora en estudiantes K12.
                 </p>
+                <a href="https://didactia.fund.ar/" class="hero-cta">Acceder a la plataforma</a>
             </div>
         </section>
 
@@ -168,6 +753,21 @@
             </div>
         </section>
 
+        <section id="acceder" class="access-platform">
+            <div class="container">
+                <h2 class="section-title">Acceder a la plataforma</h2>
+                <div class="access-platform-content">
+                    <p>
+                        Experimenta DidactIA y descubre cómo la inteligencia artificial puede transformar 
+                        la comprensión lectora en el aula.
+                    </p>
+                    <a href="https://didactia.fund.ar/" class="cta-button" target="_blank" rel="noopener noreferrer">
+                        Acceder a DidactIA
+                    </a>
+                </div>
+            </div>
+        </section>
+
         <section class="about">
             <div class="container">
                 <h2 class="section-title">Sobre Fundar</h2>
@@ -178,9 +778,24 @@
                 <div class="credentials">
                     <h3>Antecedentes relevantes</h3>
                     <ul class="credentials-list">
-                        <li><span class="year">2024</span> Proyecto IA y aprendizaje activo con PENT-FLACSO</li>
-                        <li><span class="year">2024</span> Presentación en MIT-RAISE AI & Education Summit</li>
-                        <li><span class="year">2025</span> Participación en el Informe BID sobre alfabetización en IA y modelos avanzados de lenguaje en Argentina</li>
+                        <li>
+                            <span class="year">2024</span> 
+                            Proyecto IA y aprendizaje activo con 
+                            <a href="https://fund.ar/publicacion/inteligencia-artificial-y-aprendizaje-activo/" target="_blank" rel="noopener noreferrer">PENT-FLACSO</a> 
+                            (<a href="https://pent.flacso.org.ar/" target="_blank" rel="noopener noreferrer">PENT FLACSO</a>)
+                        </li>
+                        <li>
+                            <span class="year">2024</span> 
+                            Presentación en 
+                            <a href="https://raise.mit.edu/events/ai-education-summit-2024/" target="_blank" rel="noopener noreferrer">MIT-RAISE AI & Education Summit</a> 
+                            (<a href="https://raise.mit.edu/wp-content/uploads/2025/08/MIT_AIED_2024-Adolfo-Kvitca-Enhancing-K-12-Education-with-AI.pdf" target="_blank" rel="noopener noreferrer">paper</a>)
+                        </li>
+                        <li>
+                            <span class="year">2025</span> 
+                            Participación en el 
+                            <a href="https://publications.iadb.org/es/node/37190" target="_blank" rel="noopener noreferrer">Informe BID</a> 
+                            sobre alfabetización en IA y modelos avanzados de lenguaje en Argentina
+                        </li>
                     </ul>
                 </div>
             </div>
