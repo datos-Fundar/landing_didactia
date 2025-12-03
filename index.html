@@ -83,7 +83,17 @@
         .logo-fundar {
             height: 30px;
             width: auto;
-            filter: brightness(0) saturate(100%) invert(27%) sepia(95%) saturate(1352%) hue-rotate(200deg) brightness(97%) contrast(96%);
+            filter: brightness(0);
+        }
+
+        .logo-fundar-link {
+            text-decoration: none;
+            display: inline-block;
+            transition: opacity 0.2s ease;
+        }
+
+        .logo-fundar-link:hover {
+            opacity: 0.8;
         }
 
         .nav {
@@ -307,7 +317,7 @@
 
         .levels-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: var(--spacing-md);
             margin-top: var(--spacing-md);
         }
@@ -353,7 +363,7 @@
 
         .teacher-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: var(--spacing-md);
         }
 
@@ -464,6 +474,18 @@
             line-height: 1.7;
         }
 
+        .alliance a {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .alliance a:hover {
+            color: var(--color-primary-dark);
+            text-decoration: underline;
+        }
+
         /* About */
         .about {
             background-color: var(--color-bg-light);
@@ -563,7 +585,10 @@
                 padding: var(--spacing-lg) 0;
             }
 
-            .solution-grid,
+            .solution-grid {
+                grid-template-columns: 1fr;
+            }
+
             .levels-grid,
             .teacher-grid {
                 grid-template-columns: 1fr;
@@ -594,7 +619,9 @@
         <div class="container">
             <div class="logo-container">
                 <img src="https://didactia.fund.ar/isologo.png" alt="DidactIA" class="logo">
-                <img src="https://fund.ar/wp-content/uploads/2022/07/logo_fundar-light.svg" alt="Fundar" class="logo-fundar">
+                <a href="https://fund.ar/" target="_blank" rel="noopener noreferrer" class="logo-fundar-link">
+                    <img src="https://fund.ar/wp-content/uploads/2022/07/logo_fundar-light.svg" alt="Fundar" class="logo-fundar">
+                </a>
             </div>
             <nav class="nav">
                 <a href="#solucion">Solución</a>
@@ -747,7 +774,7 @@
                     </ul>
                     <div class="alliance">
                         <h3>Alianza estratégica con UNICEF</h3>
-                        <p>En el marco de este proyecto, Fundar firmó una alianza con UNICEF para el fortalecimiento del diseño pedagógico de la herramienta DidactIA en el aula.</p>
+                        <p>En el marco de este proyecto, <a href="https://fund.ar/" target="_blank" rel="noopener noreferrer">Fundar</a> firmó una alianza con UNICEF para el fortalecimiento del diseño pedagógico de la herramienta DidactIA en el aula.</p>
                     </div>
                 </div>
             </div>
@@ -770,9 +797,9 @@
 
         <section class="about">
             <div class="container">
-                <h2 class="section-title">Sobre Fundar</h2>
+                <h2 class="section-title">Sobre <a href="https://fund.ar/" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Fundar</a></h2>
                 <p class="about-text">
-                    Fundar es un centro de innovación en políticas de desarrollo que transforma investigación rigurosa en acción. 
+                    <a href="https://fund.ar/" target="_blank" rel="noopener noreferrer" style="color: var(--color-primary); text-decoration: none; font-weight: 600;">Fundar</a> es un centro de innovación en políticas de desarrollo que transforma investigación rigurosa en acción. 
                     Diseñamos soluciones basadas en IA, datos y evidencia para construir una región más productiva, sostenible e inclusiva.
                 </p>
                 <div class="credentials">
@@ -804,7 +831,7 @@
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 DidactIA - Fundar. Todos los derechos reservados.</p>
+            <p>&copy; 2025 DidactIA - <a href="https://fund.ar/" target="_blank" rel="noopener noreferrer" style="color: rgba(255, 255, 255, 0.8); text-decoration: none;">Fundar</a>. Todos los derechos reservados.</p>
         </div>
     </footer>
 </body>
